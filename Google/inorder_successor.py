@@ -14,14 +14,6 @@ class Node(object):
 	def getRight(self):
 		return self.right
 
-	def getChildren(self):
-		children = []
-		if (self.left != None):
-			children.append(self.left)
-		if (self.right != None):
-			children.append(self.right)
-		return children
-		
 
 
 class mytree(object):
@@ -60,42 +52,98 @@ class mytree(object):
 				print(curnode.value)
 				curnode = curnode.left
 
+	def __getChildren(self, currentN):
+		children = []
+		if (currentN.left is not None):
+			children.append(currentN.left)
+		if (currentN.right is not None):
+			children.append(currentN.right)
+		return children
 
+
+	def breathSearch(self):
+		children1 = self.__getChildren(self.root)
+		#print("childre are" + str(children))
+		all_node = []
+		children = []
+		if children1 is not None:
+			for child in children1:
+				node_r = child.value
+				all_node.append(node_r)
+				children = self.__getChildren(child)
+				children.append(children)
+				print("children are" + str(children))
+
+		while children is not None:
+			for child in children:
+				print(child)
+				node = child.value
+				# print("child is" + str(child))
+				all_node.append(node)
+				children = self.__getChildren(child)	
+				#print(children)
+
+			else:
+				break
+
+		return all_node
+
+	# def depth_search(self):
+	# 	child.left = 
+
+
+
+		#back travel
 
 
 	def inorderSuccessor(self,  node):
 		l = []
+		if self.root.value > node:
+			l.append(self.root.value)
+		
 		while self.root is not None:
-			if self.root.left.value > node:
-			#	nextL = self.root.left.value
+			# if self.root.left is not None:
+			# 	print('left node is ' + str(self.root.left.value))
+			# if self.root.right is not None:
+			# 	print('right node is ' + str(self.root.right.value))
+
+
+			if self.root.left is not None and self.root.left.value > node:
 				print('left node is ' + str(self.root.left.value))
+				l.append(self.root.left.value)
 				self.root = self.root.left
 				
+
+			if self.root.right is not None and self.root.right.value > node:
+				print('right node is ' + str(self.root.right.value))
+				l.append(self.root.right.value)
+				self.root = self.root.right
+
+			elif self.root.left is not None and self.root.left.value < node :
+				self.root = self.root.right
+				l.append(self.root.right.value)
+				print('right node is ' + str(self.root.right.value))
+
 				# if nextL > node:
 				# 	l.append(nextL)
-				
+			else:
+				break
 
-			# if self.root.value <= node:
-			# 	nextR = self.root.right.value
-			# 	print("right node is " + str(nextR))
-			# 	if nextR > node:
-			# 		l.append(nextR)				
+		return l
 
-					
-		if len(l) == 0 and self.root.value > node:
-			l.append(self.root.value)
-
-			return l
 
 
 t = mytree()
 
 t.insert(7)
-t.insert(6)
+t.insert(8)
 t.insert(4)
 t.insert(5)
 t.insert(9)
 t.insert(10)
+#t.getChildren()
+t.breathSearch()
+
 
 t.inorderSuccessor(5)
 #t.leftTraverse(6)
