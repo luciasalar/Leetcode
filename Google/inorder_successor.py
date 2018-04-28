@@ -1,4 +1,5 @@
 #inorder successor means the number closest to the current node   e.g  if current node is 3, successor is 4
+import queue
 
 class Node(object):
 	"""docstring for 
@@ -13,6 +14,14 @@ class Node(object):
 
 	def getRight(self):
 		return self.right
+    
+	def getChildren(self):
+		children = []
+		if (self.left is not None):
+			children.append(self.left)
+		if (self.right is not None):
+			children.append(self.right)
+		return children
 
 
 
@@ -59,7 +68,20 @@ class mytree(object):
 		if (currentN.right is not None):
 			children.append(currentN.right)
 		return children
-
+    
+	def breadthFirstTraversal(self):
+		breadthOrderedValues = []
+		q = queue.Queue()
+		q.put(self.root)
+		while not q.empty():
+			curr_node = q.get()
+			if curr_node is None: #Base case for empty tree
+				continue
+			breadthOrderedValues.append(curr_node.value)
+			children = curr_node.getChildren()
+			for child in children:
+				q.put(child)
+		return breadthOrderedValues
 
 	def breathSearch(self):
 		children1 = self.__getChildren(self.root)
@@ -142,10 +164,10 @@ t.insert(5)
 t.insert(9)
 t.insert(10)
 #t.getChildren()
-t.breathSearch()
+#t.breathSearch()
+print(t.breadthFirstTraversal())
 
-
-t.inorderSuccessor(5)
+#t.inorderSuccessor(5)
 #t.leftTraverse(6)
 
 
@@ -165,17 +187,17 @@ def inOrder(t):
 
 
 
-t = mytree()
+#t = mytree()
 
-t.insert(7)
-t.insert(4)
-t.insert(5)
-t.insert(9)
-t.insert(10)
+#t.insert(7)
+#t.insert(4)
+#t.insert(5)
+#t.insert(9)
+#t.insert(10)
 
-t.inorderSuccessor(3)
+#t.inorderSuccessor(3)
 
-inOrder(t.root)
+#inOrder(t.root)
 
 
 ####example 
@@ -223,7 +245,7 @@ class Foo(object):
 
 a = Foo()
 a.PrintBar()
-a.__bar
+#a.__bar doesn't work
 
 
 
