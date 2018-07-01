@@ -1,3 +1,3 @@
 # Leetcode
-coding interview 
-This is my solution for the coding interview questions on Leetcode
+
+This are my solutions for the coding interview questions on Leetcode
